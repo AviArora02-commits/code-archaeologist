@@ -1,0 +1,44 @@
+# Self-hosted Code Archaeologist on open-source Cognee (pip SDK).
+# No Cognee Cloud account required — full remember/recall/improve/forget locally.
+#
+# Usage:
+#   cp .env.open-source.example .env
+#   # Edit .env — set GEMINI_API_KEY (or OPENAI_API_KEY)
+#   docker compose up --build
+#   open http://localhost:3000
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      COGNEE_MODE: local
+      CORS_ORIGINS: http://localhost:3000
+      SQLITE_PATH: /data/code_archaeologist.db
+      CLONE_DIR: /data/repos
+      DATA_ROOT_DIRECTORY: /data/cognee_data
+      SYSTEM_ROOT_DIRECTORY: /data/cognee_system
+    volumes:
+      - archaeologist_data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  archaeologist_data:

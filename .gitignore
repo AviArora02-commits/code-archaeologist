@@ -29,3 +29,8 @@ Thumbs.db
 
 # Cognee local data
 .cognee/
+
+# Private hackathon submission docs (keep local)
+BLOG.md
+docs/SOCIAL.md
+docs/OPEN_SOURCE_TRACK.md

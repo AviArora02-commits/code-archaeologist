@@ -44,7 +44,17 @@ async def init_cognee(settings: Settings | None = None) -> None:
         await cognee.serve(url=cfg.cognee_cloud_url, api_key=cfg.cognee_api_key)
         logger.info("cognee_cloud_connected", url=cfg.cognee_cloud_url)
     else:
-        logger.info("cognee_local_mode")
+        import os
+
+        if cfg.data_root_directory:
+            os.environ["DATA_ROOT_DIRECTORY"] = cfg.data_root_directory
+        if cfg.system_root_directory:
+            os.environ["SYSTEM_ROOT_DIRECTORY"] = cfg.system_root_directory
+        logger.info(
+            "cognee_local_mode",
+            data_root=cfg.data_root_directory or "default",
+            system_root=cfg.system_root_directory or "default",
+        )
     _cognee_initialized = True
 
 

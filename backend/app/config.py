@@ -42,6 +42,10 @@ class Settings(BaseSettings):
     notify_email_from: str = ""
     notify_email_to: str = ""
 
+    # Open-source Cognee (local SDK) storage paths
+    data_root_directory: str = ""
+    system_root_directory: str = ""
+
     @model_validator(mode="after")
     def use_persistent_volume(self) -> "Settings":
         data_dir = Path("/data")

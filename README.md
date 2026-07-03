@@ -2,9 +2,10 @@
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://frontend-six-alpha-67.vercel.app)
 [![Cognee Cloud](https://img.shields.io/badge/memory-Cognee%20Cloud-blue)](https://github.com/topoteretes/cognee)
+[![Open Source](https://img.shields.io/badge/Cognee-self--hosted-green)](https://github.com/topoteretes/cognee)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-**Personal project** — give legacy codebases permanent memory on Cognee Cloud.
+**Personal project** — give legacy codebases permanent memory with Cognee (Cloud or self-hosted).
 
 Trace **why** code was written — not with semantic search guesses, but with sourced evidence chains:
 **function → commit → PR → issue**.
@@ -18,6 +19,20 @@ Built after struggling to onboard onto legacy Java and C++ systems at Ericsson G
 | **App** | https://frontend-six-alpha-67.vercel.app |
 | **API** | https://backend-production-c1682.up.railway.app |
 | **Health** | https://backend-production-c1682.up.railway.app/api/health |
+
+## Self-hosted (open-source Cognee)
+
+Run entirely on your machine with the open-source `cognee` pip package — no Cognee Cloud account.
+
+```bash
+cp .env.open-source.example .env
+# Set GEMINI_API_KEY in .env
+docker compose up --build
+```
+
+Open http://localhost:3000 · API http://localhost:8000/api/health
+
+Uses `COGNEE_MODE=local` with persistent Docker volume for SQLite, cloned repos, and Cognee graph data.
 
 ## Features
 
